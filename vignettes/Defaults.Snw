@@ -12,7 +12,6 @@
        jeff.a.ryan@gmail.com}
 \date{August 18, 2007}
 
-\usepackage{/Users/jryan/Desktop/R-patched/share/texmf/Sweave}
 \begin{document}
 
 \maketitle
@@ -68,37 +67,19 @@ By using the {\sf Defaults} package, one can specify outside the function call t
 new default value, so that subsequent calls will now display all
 names.
 
-\begin{Schunk}
-\begin{Sinput}
-> hello <- "visible"
-> .goodbye <- "hidden"
-> ls()
-\end{Sinput}
-\begin{Soutput}
-[1] "hello"
-\end{Soutput}
-\begin{Sinput}
-> library(Defaults)
-> setDefaults("ls", all.names = TRUE)
-> ls()
-\end{Sinput}
-\begin{Soutput}
-[1] ".goodbye" "hello"   
-\end{Soutput}
-\begin{Sinput}
-> ls(all.names = FALSE)
-\end{Sinput}
-\begin{Soutput}
-[1] "hello"
-\end{Soutput}
-\begin{Sinput}
-> unDefaults(ls)
-> ls()
-\end{Sinput}
-\begin{Soutput}
-[1] "hello"
-\end{Soutput}
-\end{Schunk}
+<<a>>=
+hello<-"visible";.goodbye<-"hidden"
+ls()
+
+library(Defaults)
+setDefaults('ls',all.names=TRUE)
+
+ls()
+
+ls(all.names=FALSE)
+#unDefaults(ls)
+ls()
+@
 
 \noindent
 After loading the {\sf Defaults} library, a call to
@@ -156,24 +137,11 @@ in situations where a user call to {\tt unDefaults} had removed it).
 {\tt unsetDefaults} also removes {\sf Defaults} functionality, by calling
 {\tt unDefaults} internally.
 
-\begin{Schunk}
-\begin{Sinput}
-> getDefaults(ls)
-\end{Sinput}
-\begin{Soutput}
-$all.names
-[1] TRUE
-\end{Soutput}
-\begin{Sinput}
-> getDefaults()
-\end{Sinput}
-\begin{Soutput}
-[1] "ls"
-\end{Soutput}
-\begin{Sinput}
-> unsetDefaults(ls, confirm = FALSE)
-\end{Sinput}
-\end{Schunk}
+<<b>>=
+getDefaults(ls)
+getDefaults()
+unsetDefaults(ls,confirm=FALSE)
+@
 
 \vspace{2mm}
 \noindent
@@ -191,24 +159,14 @@ placed at the beginning of your function. Or for the truly lazy
 developer, no change at all -- as the end user can always add
 this functionality (see {\bf The End User}).
 
-\begin{Schunk}
-\begin{Sinput}
-> fun <- function(x = 5, y = 5) {
-+     importDefaults("fun")
-+     x * y
-+ }
-> fun()
-\end{Sinput}
-\begin{Soutput}
-[1] 25
-\end{Soutput}
-\begin{Sinput}
-> fun(x = 1:5)
-\end{Sinput}
-\begin{Soutput}
-[1]  5 10 15 20 25
-\end{Soutput}
-\end{Schunk}
+<<c>>=
+fun <- function(x=5,y=5) {
+importDefaults("fun")
+x * y
+}
+fun()
+fun(x=1:5)
+@
 
 \vspace{2mm}
 \noindent
@@ -222,34 +180,14 @@ In other words, if you explicitly specify an argument value in
 the function call, {\em that} is the value that will be
 used by the function.
 
-\begin{Schunk}
-\begin{Sinput}
-> setDefaults(fun, x = 8, y = 2)
-> fun()
-\end{Sinput}
-\begin{Soutput}
-[1] 16
-\end{Soutput}
-\begin{Sinput}
-> fun(9)
-\end{Sinput}
-\begin{Soutput}
-[1] 18
-\end{Soutput}
-\begin{Sinput}
-> fun(y = 0.5)
-\end{Sinput}
-\begin{Soutput}
-[1] 4
-\end{Soutput}
-\begin{Sinput}
-> unsetDefaults(fun, confirm = FALSE)
-> fun()
-\end{Sinput}
-\begin{Soutput}
-[1] 25
-\end{Soutput}
-\end{Schunk}
+<<d>>=
+setDefaults(fun,x=8,y=2)
+fun()
+fun(9)
+fun(y=0.5)
+unsetDefaults(fun,confirm=FALSE)
+fun()
+@
 
 \section{How it works internally}
 A little background on just how this all works, for those who
