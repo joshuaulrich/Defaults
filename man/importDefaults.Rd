@@ -59,14 +59,21 @@ the function call.
 \note{ 
 It is important to note that when a function
 implements \code{importDefaults}, non-named
-arguments \emph{may} be ignored.
+arguments \emph{may} be ignored if a global
+Default has been set (i.e. not NULL).
+
+If this is the case, simply name the arguments
+in the calling function.
 
 This \emph{should} also work for functions
 retrieving formal parameter values
 from \code{options}, as
 it assigns a value to the parameter in
 a way that looks like it was passed in
-the function call.
+the function call. So any check on \code{options}
+would presumably disregard if an argument
+was passed to the function (what \code{useDefaults}
+does)
 
 \code{.importDefaults} is \emph{NOT}
 a user callable function. Strange things

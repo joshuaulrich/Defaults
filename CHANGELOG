@@ -1,0 +1,35 @@
+Version 1.0-5
+
+* New vignette describing package
+
+* Fixed accidental multiple additions of .importDefaults()
+  when useDefaults was called more than once on an object
+
+
+Version 1.0-4
+
+* Documentation now is spread out over multiple
+  files.
+
+* Fixed bug where if unDefaults was called on
+  a function defined in the Global environment
+  with importDefaults it would delete the function
+  This _shouldn't_ happen.
+
+* Fixed setDefaults problem where if a value was
+  set to NULL by the caller, it was removed from
+  the list of Defaults, and became impossible
+  to reset to a new value
+
+* Positional matching of args even if Default is set
+  Also can now use partial matching for arguments to
+  override the global Defaults from the fun call.
+
+TO ADD:
+
+* Partial matching of args would be nice during
+  setDefaults
+
+* Warning when a value is NOT set by setDefaults,
+  because it _isn't_ a formal default, or because
+  of a misspelling/partial name error.

@@ -1,11 +1,11 @@
 Package: Defaults
 Type: Package
 Title: Create Global Function Defaults
-Version: 1.0-2
-Date: 2007-07-23
+Version: 1.0-5
+Date: 2007-07-25
 Author: Jeffrey A. Ryan
-Maintainer: Jeff Ryan <jeff.a.ryan@gmail.com>
-Description: Set, get, and import global function defaults 
+Maintainer: Jeffrey A. Ryan <jeff.a.ryan@gmail.com>
+Description: Set, Get, and Import Global Function Defaults 
 LazyLoad: yes
-License: GPL
-Packaged: Mon Jul 23 15:25:38 2007; jryan
+License: GPL 2 or later
+Packaged: Thu Jul 26 12:12:08 2007; jryan

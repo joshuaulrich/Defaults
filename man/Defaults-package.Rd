@@ -6,18 +6,18 @@
 Create Global Function Defaults
 }
 \description{
-Set, get, and import global function defaults
+Set, Get, and Import Global Function Defaults
 }
 \details{
 \tabular{ll}{
 Package: \tab Defaults\cr
 Type: \tab Package\cr
-Version: \tab 1.0-2\cr
-Date: \tab 2007-07-23\cr
+Version: \tab 1.0-5\cr
+Date: \tab 2007-07-25\cr
 LazyLoad: \tab yes\cr
-License: \tab GPL\cr
-Packaged: \tab Sun Jul 23 15:03:19 2007; jryan\cr
-Built: \tab R 2.5.0; ; 2007-07-23 15:03:38; unix\cr
+License: \tab GPL 2 or later\cr
+Packaged: \tab Sun Jul 25 10:03:19 2007; jryan\cr
+Built: \tab R 2.5.0; ; 2007-07-25 10:03:38; unix\cr
 }
 
 Index:

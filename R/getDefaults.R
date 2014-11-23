@@ -5,7 +5,10 @@ function(...) {
   calling.fun <- as.character(match.call(call=as.call(sys.call(-1)))[1])
   all.defaults <- getDefaults(calling.fun)
   envir <- as.environment(-1)
-  passed.args <- names(sapply(match.call(call=as.call(sys.call(-1)))[-1],deparse))
+  #passed.args <- names(sapply(match.call(call=as.call(sys.call(-1)))[-1],deparse))
+  passed.args <- names(as.list(match.call(
+                       definition=eval(parse(text=calling.fun)),
+                       call=as.call(sys.call(-1)))))[-1]
   formal.args <- names(formals(as.character(sys.call(-1))))
   default.args <- names(which(sapply(all.defaults,function(x) !is.null(x))==TRUE))
   for(arg in formal.args) {
@@ -29,7 +32,8 @@ function(name)
   if(!is.function(eval(parse(text=name))))
     stop("argument must be a function")
   # If function already makes use of 'importDefaults()' skip...
-  if(identical(grep('importDefaults()',deparse(body(name))),integer(0))) {
+  if(identical(grep('importDefaults()',
+     deparse(body(get(name,env=globalenv())))),integer(0))) {
   if(class(body(name)) == "{") {
     new.fun.body <- as.call(parse(text=
                     c(deparse(body(name))[1],
@@ -50,7 +54,7 @@ function(name)
 "unDefaults" <-
 function(name)
 {
-  if(!identical(grep('.importDefaults()',deparse(body(name))),
+  if(!identical(grep('\\.importDefaults()',deparse(body(name))),
                integer(0))) {
     env <- as.environment(-1)
     if(is.function(name)) name <- deparse(substitute(name))
@@ -67,26 +71,38 @@ function(name)
 
 "setDefaults" <-
 function(name,...) {
-  if(is.function(name)) name <- deparse(substitute(name))
+  if(is.function(name)) 
+    name <- deparse(substitute(name))
   default.name <- paste(name,"Default",sep=".")
   all.defaults <- getDefaults(name)
-  if(is.null(all.defaults)) 
-    all.defaults <- sapply(names(formals(name)),function(x) {x=NULL})
+  if(is.null(all.defaults)) {
+    all.defaults <- sapply(names(formals(name)),
+                           function(x) x=NULL)
+  }
+  all.defaults <- as.list(all.defaults)
   new.defaults <- list(...)
   for(arg.name in names(all.defaults)) {
     if(arg.name %in% names(new.defaults)) 
-      all.defaults[[arg.name]] <- new.defaults[[arg.name]]
+      if(!is.null(new.defaults[[arg.name]])) {
+        all.defaults[[arg.name]] <- new.defaults[[arg.name]]
+      } else {
+        all.defaults[[arg.name]] <- NULL
+      }
   }
-  env <- as.environment(-1)
-  eval(parse(text=paste('options(',default.name,'=list(',
-       paste(paste(names(all.defaults),'=',
-       lapply(all.defaults,function(x) {
-         if(is.character(x)) {
-           deparse(x)
-         } else {
-           x
-         }})),collapse=','),'))',
-       sep='')),envir=env)
+  if(length(all.defaults)==0) {
+    unsetDefaults(name,confirm=FALSE)
+  } else {
+    env <- as.environment(-1)
+    eval(parse(text=paste('options(',default.name,'=list(',
+         paste(paste(names(all.defaults),'=',
+         lapply(all.defaults,function(x) {
+           if(is.character(x)) {
+             deparse(x)
+           } else {
+             x
+           }})),collapse=','),'))',
+         sep='')),envir=env)
+  }
 }
 
 "unsetDefaults" <-

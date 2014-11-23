@@ -1,83 +1,35 @@
 \name{getDefaults}
 \alias{getDefaults}
-\alias{setDefaults}
-\alias{unsetDefaults}
-\alias{useDefaults}
-\alias{unDefaults}
-\title{ Use and Manage Global Function Defaults }
+\title{ Show Global Defaults List By Function }
 \description{
-Allows for the use of globally managed default
-values for formal function arguments. Adds
-the ability to pre-specify a value for any formal
-argument as if it were specified in the function call.
+Show global Default list by function or
+specified argument values by function.
 } 
 \usage{
 getDefaults(name=NULL, arg = NULL)
-setDefaults(name,...)
-unsetDefaults(name, confirm=TRUE)
-
-useDefaults(name)
-unDefaults(name)
 }
 \arguments{
   \item{name}{ name of function, quoted or unquoted }
   \item{arg}{ values to retrieve } 
-  \item{\dots}{ new default argument-value pairs } 
-  \item{confirm}{ Prompt before unsetting defaults. }
 }
 \details{
-Defaults are set inside the named function with
-a call to \code{importDefaults}.  This may be hard
-coded into the function by the author, or may be
-dynamically added with a call to \code{useDefaults}.
-The later copies the original to a hidden function
-in the global namespace, and creates a modified version
-with the same name as the original in the current 
-environment.
-
-\code{useDefaults} replaces all formal functional
-arguments with all non-NULL globally specified ones
-after first checking that these global defaults have
-not been overridden with new values in the function 
-call.
-
-The order of lookup is as follows, with the lookup
-halted once a specified value is found:
-
-1. Check for arguments specified in the actual call.
-
-2. Check for arguments specified by setDefaults.
-
-3. Use original function defaults. (if any)
-
-Setting default values is accompished via
-\code{setDefaults}, with the values being written
-to \R's \code{options} list as a named list set
-to the function's name appended with a .Default,
-all managed automatically.  It is possible to view
-and delete defaults with the functions
-\code{getDefaults} and \code{unsetDefaults}, 
-respectively.
-
 A list of function names currently with
-Defaults set can be seen with \code{getDefaults}
-if called with no arguments.
+Defaults set can be seen by calling \code{getDefaults()}
+with no arguments.
 
-This \emph{does not} mean the returned function
+This \emph{does not} imply that the returned function
 names are currently set to accept defaults (via
 \code{useDefaults} or hard-coded with
-\code{importDefaults}.
+\code{importDefaults}, rather that they have been
+set up to store user Defaults.
 
+A call to useDefaults is required for most functions
+before Defaults will be used.
 
-To return a function enabled by \code{useDefaults}
-to its original state, call \code{unDefaults}.
-Conceptually this is similar to \code{debug} and
-\code{undebug}, though implemented entirely in \R.
+All values can be viewed less elegantly by a call
+to \code{getOption(name_of_function.Default)}
 }
 \value{
-With the exception of \code{getDefaults}, these functions
-are used for their side effects.
-
 \code{getDefaults} returns a named list of defaults
 and associated values, similar to \code{formals}, only
 returning \code{setDefaults} set values for the
@@ -89,36 +41,40 @@ all functions currently having Defaults set
 (by \code{setDefaults})
 }
 \author{ Jeffrey A. Ryan }
-\note{
-Currently, it is \emph{NOT} possible to pass
-values for \dots arguments, only formally specified
-arguments in the original function definition.
-}
-\seealso{ \code{\link{importDefaults}},
-          \code{\link{options}},
-          \code{\link{formals}},
-          \code{\link{body}},
-          \code{\link{as.function}}
+\seealso{
+          \code{\link{setDefaults}},
+          \code{\link{useDefaults}},
+          \code{\link{options}}
 }
 \examples{
-my.fun <- function(x=2,y=1) { x ^ y }
-my.fun()            #returns 2
-my.fun(x=2,y=10)    #returns 1024
+setDefaults(lm,na.action='na.exclude',singular.ok=TRUE)
 
-setDefaults(my.fun,x=2,y=3)
-useDefaults(my.fun)
-my.fun
+getDefaults()
+getDefaults(lm)
 
-my.fun()            #returns 8
-my.fun(y=10)        #returns 1024
-my.fun(x=2,y=10)    #returns 1024
+unsetDefaults(lm,confirm=FALSE)  
+getDefaults(lm)
 
-unDefaults(my.fun)
-my.fun
-my.fun()            #returns 2
 
-getDefaults(my.fun)
-unsetDefaults(my.fun,confirm=FALSE)  
-getDefaults(my.fun)
+
+my.fun <- function(x=2,y=1) { x ^ y } 
+my.fun()                #returns 2 
+my.fun(x=2,y=10)        #returns 1024 
+
+setDefaults(my.fun,x=2,y=3) 
+useDefaults(my.fun) 
+my.fun 
+
+my.fun()                #returns 8 
+my.fun(y=10)            #returns 1024 
+my.fun(x=2,y=10)        #returns 1024 
+
+unDefaults(my.fun) 
+my.fun 
+my.fun()                #returns 2 
+
+getDefaults(my.fun) 
+unsetDefaults(my.fun,confirm=FALSE) 
+getDefaults(my.fun) 
 }
 \keyword{ utilities }
