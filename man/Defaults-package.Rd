@@ -12,12 +12,10 @@ Set, Get, and Import Global Function Defaults
 \tabular{ll}{
 Package: \tab Defaults\cr
 Type: \tab Package\cr
-Version: \tab 1.1-1\cr
-Date: \tab 2007-08-17\cr
+Version: \tab 2.0-0\cr
+Date: \tab 2014-11-23\cr
 LazyLoad: \tab yes\cr
 License: \tab GPL 2 or later\cr
-Packaged: \tab Sun Jul 25 10:03:19 2007; jryan\cr
-Built: \tab R 2.5.0; ; 2007-07-25 10:03:38; unix\cr
 }
 
 Index:
@@ -47,7 +45,7 @@ by \code{formals} by a call to \code{setDefaults}.
 \author{
 Jeffrey A. Ryan
 
-Maintainer: Jeff Ryan <jeff.a.ryan@gmail.com>
+Maintainer: Joshua M. Ulrich <josh.m.ulrich@gmail.com>
 }
 \note{
 It is important to note that only exported functions may
