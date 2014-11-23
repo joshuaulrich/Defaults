@@ -22,8 +22,8 @@ Built: \tab R 2.5.0; ; 2007-07-25 10:03:38; unix\cr
 
 Index:
 \preformatted{
-useDefaults             Enable Global Default Check by Function
-unDefaults              Disable Global Default Check by Function
+useDefaults             DEFUNCT: Enable Global Default Check by Function
+unDefaults              DEFUNCT: Disable Global Default Check by Function
 
 getDefaults             Show Global Defaults List by Function
 setDefaults             Create Global Defaults List by Function
@@ -65,13 +65,13 @@ correctly.
 formals(sd)                       # what _can_ be set
 try(sd(c(1:10,NA)),silent=TRUE)   # fails
 
-useDefaults(sd)                   # not necessary - setDefaults will call
+#useDefaults(sd)                  # DEFUNCT as of 2.0-0
 setDefaults(sd, na.rm=TRUE) 
 getDefaults(sd)                   # what _has_ been set
 
 sd(c(1:10,NA))                    # works!
 
 unsetDefaults(sd, confirm=FALSE)  # removes previously set default
-unDefaults(sd)                    # unecessary, as unsetDefaults calls automatically
+#unDefaults(sd)                   # DEFUNCT as of 2.0-0
 
 }

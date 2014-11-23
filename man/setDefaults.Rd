@@ -103,14 +103,14 @@ my.fun()            #returns 2
 my.fun(x=2,y=10)    #returns 1024
 
 setDefaults(my.fun,x=2,y=3)
-useDefaults(my.fun)
+#useDefaults(my.fun)# DEFUNCT as of 2.0-0
 my.fun
 
 my.fun()            #returns 8
 my.fun(y=10)        #returns 1024
 my.fun(x=2,y=10)    #returns 1024
 
-unDefaults(my.fun)
+#unDefaults(my.fun) # DEFUNCT as of 2.0-0
 my.fun
 my.fun()            #returns 2
 

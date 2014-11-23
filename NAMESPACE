@@ -1,5 +1,4 @@
 export(importDefaults,
-       .importDefaults,
        useDefaults,
        unDefaults,
        getDefaults,
