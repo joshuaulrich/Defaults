@@ -12,37 +12,36 @@ performing defaults, or satisfy a different
 preference.
 }
 \usage{
-importDefaults(...)
+importDefaults(calling.fun)
 }
 \arguments{
-  \item{\dots}{ ignored }
+  \item{calling.fun}{ name of function to act upon }
 }
 \details{
 Placed immediately after the function declaration,
-a call to \code{importDefaults()} checks the
+a call to \code{importDefaults} checks the
 user's environment for globally specified
 default values for the called function.
-These defaults are specified by the user with a
+These defaults can be specified by the user with a
 call to \code{setDefaults}, and will override
-any default formal parameters, essentially
+any default formal parameters, in effect
 replacing the original defaults with user
 supplied values instead.
 
-If a function has not been written with
-\code{importDefaults}, it is possible to
+If a function has \emph{not} been written with
+\code{importDefaults} (most \R functions, so far\ldots),
+it is possible to
 simply call \code{useDefaults} to achieve
-the same results. See the related help page.
+the same results. As of version 1.1-0, simply calling
+\code{setDefaults} will call \code{useDefaults}
+internally, removing the need to explicitly
+call. See the related help page.
 
 Any values specified by the user in a
-name-value fashion in the parent function
+in the parent function
 (that is, the function containing
 \code{importDefaults}) will override the values
 set in the global default environment.
-
-Non-named arguments to the parent function
-will be ignored if there is
-a global default specified, this is different
-than the standard default argument convention.
 }
 \value{
 Used for its side-effects, a call to \code{importDefaults}
@@ -54,6 +53,12 @@ default values passed in the parent function call.
 defaults in the function definition, take lower
 precedence than arguments specified by the user in
 the function call.
+
+An alias to \code{importDefaults}, \code{.importDefaults}
+is the actual function added when \code{useDefaults} is
+called on a function. The naming convention is designed to
+facilitate setting and unsetting, and should \emph{NOT} be
+used by the function developer. Please use only \code{importDefaults}
 }
 \author{ Jeffrey A. Ryan }
 \note{ 
@@ -71,20 +76,16 @@ from \code{options}, as
 it assigns a value to the parameter in
 a way that looks like it was passed in
 the function call. So any check on \code{options}
-would presumably disregard if an argument
+would presumably disregard \code{importDefaults}
+values if an argument
 was passed to the function (what \code{useDefaults}
 does)
-
-\code{.importDefaults} is \emph{NOT}
-a user callable function. Strange things
-may happen if used instead of \code{importDefaults}.
-You have been warned.
 }
 \seealso{ \code{\link{useDefaults}},\code{\link{setDefaults}} }
 \examples{
 my.fun <- function(x=3)
 {
-  importDefaults()
+  importDefaults('my.fun')
   x ^ 2
 }
 

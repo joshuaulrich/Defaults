@@ -12,8 +12,8 @@ Set, Get, and Import Global Function Defaults
 \tabular{ll}{
 Package: \tab Defaults\cr
 Type: \tab Package\cr
-Version: \tab 1.0-5\cr
-Date: \tab 2007-07-25\cr
+Version: \tab 1.1-1\cr
+Date: \tab 2007-08-17\cr
 LazyLoad: \tab yes\cr
 License: \tab GPL 2 or later\cr
 Packaged: \tab Sun Jul 25 10:03:19 2007; jryan\cr
@@ -36,31 +36,42 @@ globally specified defaults, on a per-function
 basis, available to \emph{all} functions
 written in \R.
 
-Through the use of \code{importDefaults}, which can
-be either hard coded into a function by the
-function author, or dynamically added to
+Through the use of \code{importDefaults} which can
+be hard coded into a function by the
+function author, or dynamically enabled for
 \emph{any} visible function through
 \code{useDefaults}, a user can now
 override the author specified defaults as returned
-by \code{formals}.
+by \code{formals} by a call to \code{setDefaults}.
 }
 \author{
 Jeffrey A. Ryan
 
 Maintainer: Jeff Ryan <jeff.a.ryan@gmail.com>
 }
+\note{
+It is important to note that only exported functions may
+have defaults set, which \emph{should not} be an issue,
+as they are the only user callable functions.
+
+A big thank you to John Chambers and Dirk Eddelbuettel
+who pointed out my mishandling of functions with
+namespaces calling internal non-exported functions. A new
+implementation of \code{useDefaults} now handles this
+correctly.
+}
 \keyword{ package }
 \examples{
-formals(sd)
+formals(sd)                       # what _can_ be set
 try(sd(c(1:10,NA)),silent=TRUE)   # fails
 
-useDefaults(sd)
+useDefaults(sd)                   # not necessary - setDefaults will call
 setDefaults(sd, na.rm=TRUE) 
-getDefaults(sd)
+getDefaults(sd)                   # what _has_ been set
 
 sd(c(1:10,NA))                    # works!
 
 unsetDefaults(sd, confirm=FALSE)  # removes previously set default
-unDefaults(sd)                    # returns sd to original
+unDefaults(sd)                    # unecessary, as unsetDefaults calls automatically
 
 }

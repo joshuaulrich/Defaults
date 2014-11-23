@@ -23,9 +23,6 @@ names are currently set to accept defaults (via
 \code{importDefaults}, rather that they have been
 set up to store user Defaults.
 
-A call to useDefaults is required for most functions
-before Defaults will be used.
-
 All values can be viewed less elegantly by a call
 to \code{getOption(name_of_function.Default)}
 }

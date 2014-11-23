@@ -17,10 +17,11 @@ See \code{useDefaults} for the details of
 this process.
 } 
 \usage{
-setDefaults(name,...)
+setDefaults(.name,...)
 unsetDefaults(name, confirm=TRUE)
 }
 \arguments{
+  \item{.name}{ name of function, quoted or unquoted }
   \item{name}{ name of function, quoted or unquoted }
   \item{\dots}{ name=value default pairs }
   \item{confirm}{ prompt before unsetting defaults }
@@ -31,12 +32,21 @@ setDefaults is a wrapper to
 to specify any name=value pair that
 a function has in it's formal arguments.
 
-Only formal name=value pairs specified will be updated,
-and all formal arguments will start out
-as if set to NULL values.
+Calling \code{setDefaults} on an object
+that previously could not process Defaults will
+automatically enable defaults via an internal
+call to \code{useDefaults}.
+
+Only formal name=value pairs specified will be updated.
+Values do not have to be respecified in subsequent calls
+to \code{setDefaults}, so it is possible to add
+new defaults one at a time for each function, without
+having to retype all previous values. Assigning
+NULL to any argument will remove the argument from the
+Defaults list.
 
 When a function is set to use these Defaults
-(using \code{useDefaults}, or hard-coded
+(using \code{useDefaults}, \code{setDefaults}, or hard-coded
 to use the \pkg{Defaults} package) 
 all non-NULL values set by \code{setDefaults}
 will effectively replace all formally
@@ -71,9 +81,15 @@ Currently, it is \emph{NOT} possible to pass
 values for \dots arguments, only formally specified
 arguments in the original function definition.
 
-\code{unsetDefaults} removes the entry from
-\code{options} lists. To remove single Default
-values simply set the name of the arguement to
+If it is desired to pass additional arguments,
+or more specifically have new defaults, to
+subsequent methods/calls, a seperate \code{setDefaults}
+\code{useDefaults} series is required.
+
+\code{unsetDefaults} removes the \emph{all} entries from
+the \code{options} lists for the specified function, and
+then calls \code{unDefaults}. To remove single function Default
+values simply set the name of the argument to
 NULL in \code{setDefaults}
 }
 \seealso{ 
@@ -99,6 +115,7 @@ my.fun
 my.fun()            #returns 2
 
 getDefaults(my.fun)
+setDefaults(my.fun,x=NULL)  #removes the value for x, leaving just y
 unsetDefaults(my.fun,confirm=FALSE)  
 getDefaults(my.fun)
 }
