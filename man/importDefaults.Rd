@@ -1,5 +1,6 @@
 \name{importDefaults}
 \alias{importDefaults}
+\alias{.importDefaults}
 \title{ Import Global Default Argument Values }
 \description{
 Use globally specified defaults, if set,
@@ -66,6 +67,11 @@ from \code{options}, as
 it assigns a value to the parameter in
 a way that looks like it was passed in
 the function call.
+
+\code{.importDefaults} is \emph{NOT}
+a user callable function. Strange things
+may happen if used instead of \code{importDefaults}.
+You have been warned.
 }
 \seealso{ \code{\link{useDefaults}},\code{\link{setDefaults}} }
 \examples{

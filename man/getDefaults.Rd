@@ -12,7 +12,7 @@ the ability to pre-specify a value for any formal
 argument as if it were specified in the function call.
 } 
 \usage{
-getDefaults(name, arg = NULL)
+getDefaults(name=NULL, arg = NULL)
 setDefaults(name,...)
 unsetDefaults(name, confirm=TRUE)
 
@@ -59,6 +59,16 @@ and delete defaults with the functions
 \code{getDefaults} and \code{unsetDefaults}, 
 respectively.
 
+A list of function names currently with
+Defaults set can be seen with \code{getDefaults}
+if called with no arguments.
+
+This \emph{does not} mean the returned function
+names are currently set to accept defaults (via
+\code{useDefaults} or hard-coded with
+\code{importDefaults}.
+
+
 To return a function enabled by \code{useDefaults}
 to its original state, call \code{unDefaults}.
 Conceptually this is similar to \code{debug} and
@@ -70,16 +80,17 @@ are used for their side effects.
 
 \code{getDefaults} returns a named list of defaults
 and associated values, similar to \code{formals}, only
-returning \code{setDefaults} set values.
+returning \code{setDefaults} set values for the
+\code{name} function. Single arguments need
+not be quoted, multiples must be as a character
+vector. Calling \code{getDefaults()} without
+arguments results in a character vector of
+all functions currently having Defaults set
+(by \code{setDefaults})
 }
 \author{ Jeffrey A. Ryan }
 \note{
-\code{useDefaults} only works on functions defined
-with opening and closing braces.  At present it does
-not work with simple on line functions or some S3
-methods.
-
-Additionally, it is \emph{NOT} possible to pass
+Currently, it is \emph{NOT} possible to pass
 values for \dots arguments, only formally specified
 arguments in the original function definition.
 }
