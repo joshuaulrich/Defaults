@@ -154,7 +154,7 @@ function(name=NULL,arg=NULL) {
     for(each.name in name) {
       default.name <- paste(each.name,"Default",sep=".")
       if(is.null(arg)) {
-        if(exists('all.names',inherit=FALSE)) {
+        if(exists('all.names',inherits=FALSE)) {
           all.names[[each.name]] <- options(default.name)[[1]]
         } else {
           return(options(default.name)[[1]])
@@ -164,7 +164,7 @@ function(name=NULL,arg=NULL) {
         for(each.arg in arg) {
           default.list[[each.arg]] <- options(default.name)[[1]][[each.arg]]
         }
-        if(exists('all.names',inherit=FALSE)) {
+        if(exists('all.names',inherits=FALSE)) {
           all.names[[each.name]] <- default.list
         } else {
           return(default.list)
