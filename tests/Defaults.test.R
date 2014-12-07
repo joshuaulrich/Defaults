@@ -51,11 +51,6 @@ setDefaults(a,x=list(a=1,b=2))
 cat("testing x=list(a=1,b=2) default:\t")
 test.equality(a(),list(a=1,b=2))
 
-
-cat("\n\n\nuseDefaults(b)...\n\n")
-useDefaults(b)
-cat("Testing useDefaults:\n\n")
-
 setDefaults(b,x=1)
 cat("testing x=1 default:\t\t\t")
 test.equality(b(),1)
@@ -88,7 +83,8 @@ setDefaults(b,x=list(a=1,b=2))
 cat("testing x=list(a=1,b=2) default:\t")
 test.equality(b(),list(a=1,b=2))
 
-unDefaults(b)
+cat("clean up\n \n")
+untrace(b)
 rm(a,b,test.equality)
 
 
