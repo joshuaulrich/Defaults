@@ -51,11 +51,6 @@ setDefaults(a,x=list(a=1,b=2))
 cat("testing x=list(a=1,b=2) default:\t")
 test.equality(a(),list(a=1,b=2))
 
-
-cat("\n\n\nuseDefaults(b)...\n\n")
-cat("useDefaults(b) is not available")
-cat("Error: useDefaults is defunct, because it could potentially modify functions in other namespaces. Use trace(b, edit=TRUE) to add a call to importDefaults(b) to the first line of b.\n\n")
-
 setDefaults(b,x=1)
 cat("testing x=1 default:\t\t\t")
 test.equality(b(),1)
