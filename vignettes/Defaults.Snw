@@ -90,6 +90,13 @@ to this entry.
 
 \vspace{3mm}
 \noindent
+PROPOSED
+At this point, the original function {\tt ls} is unable to process this 
+new user specified default. You need to manually manipulate the source of the original function using {\tt trace(ls, edit=TRUE)} to add a call to 
+{\tt importDefaults(ls)} as the first line of {\tt ls}.
+\vspace{3mm}
+\noindent
+DEPRECATED
 At this point the original function {\tt ls} is unable to
 process this new user specified default. {\tt setDefaults} then
 calls
@@ -127,6 +134,20 @@ within a call to {\tt setDefaults}.
 
 \vspace{3mm}
 \noindent
+PROPOSED
+The set defaults can be viewed with {\tt getDefaults}, and unset with
+a call to {\tt unsetDefaults}.  The former, when called with no
+arguments, will return a character vector of all functions currently
+having defaults {\em set} for use with {\sf Defaults}, though these will
+not {\em necessarily} be currently set to use Defaults (i.e. an edit would
+still need to be made to {\tt trace(functionname, edit=TRUE)} to enable Defaults functionality
+in situations where a user call to {\tt untrace(functionname)} had removed it).
+{\tt unsetDefaults} also removes {\sf Defaults} functionality, by calling
+{\tt untrace} internally.
+
+\vspace{3mm}
+\noindent
+DEPRECATED
 The set defaults can be viewed with {\tt getDefaults}, and unset with
 a call to {\tt unsetDefaults}.  The former, when called with no
 arguments, will return a character vector of all functions currently
@@ -206,10 +227,10 @@ unintentional overrides in subsequent sessions.
 \vspace{2mm}
 \noindent
 \subsection{How functions gain access}
-Calling {\tt setDefaults} (which calls {\tt useDefaults} internally)
+Calling {\tt setDefaults} 
 on a function magically changes
 the function to handle your previously specified defaults.
-Actually, there isn't much magic. {\tt useDefaults} modifies the
+Actually, there isn't much magic. {\tt trace(b, edit=TRUE)} lets you modify the
 function in question (actually the first instance of said function
 in its search path), by inserting at the start of the function
 a call to {\tt importDefaults}. The function is modified {\sf in-place}
